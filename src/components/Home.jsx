@@ -36,9 +36,9 @@ const Home = () => {
 
     const deleteWork = async (id) => {
         const data = await fetch(`http://localhost:4120/delete/${id}`, {
-            method:'delete',
+            method: 'delete',
             headers: {
-                'content-Type':'application/json'
+                'content-Type': 'application/json'
             }
         })
         listWork();
@@ -64,18 +64,21 @@ const Home = () => {
                     <div className='flex flex-col items-center custom-scrollbar pt-4 w-full px-4'>
                         <ul className='flex divide-x-2 divide-blur-700 border-2 divide-blue-700 border-blue-700 w-full'>
                             <li className='px-2 w-[17%] text-lg text-center'>index</li>
-                            <li className='px-2 w-[83%] text-lg text-center'>Todo</li>
+                            <li className='px-2 w-[71%] text-lg text-center'>Todo</li>
+                            <li className='px-2 w-[12%] text-lg text-center'>Done</li>
                         </ul>
                         {
                             listTodo.map((item, index) => (
                                 <ul key={index} className='flex divide-x-2 divide-blue-700 border-t-0 border-2 border-blue-700 w-full'>
                                     <li className='px-2 w-[17%] text-lg text-center '>{index + 1}</li>
-                                    <li className='px-2 w-[83%] flex  justify-between text-lg'>{item.todo}
+                                    <li className='px-2 w-[71%] flex  justify-between text-lg'>{item.todo}
                                         <div className='flex gap-1'>
                                             <button><MdModeEdit /></button>
-                                            <button onClick={()=>{deleteWork(item._id)}}><AiFillDelete /></button>
-                                            <input type="checkbox" class="rounded-checkbox" name="" id="" />
+                                            <button onClick={() => { deleteWork(item._id) }}><AiFillDelete /></button>
                                         </div>
+                                    </li>
+                                    <li className='px-2 w-[12%] flex justify-center text-lg'>
+                                        <input type="checkbox" class="rounded-checkbox" name="" id="" />
                                     </li>
                                 </ul>
                             ))

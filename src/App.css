@@ -20,8 +20,8 @@ border-radius: 50pxx;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    width: 18px; /* Adjust the size to your preference */
-    height: 18px; /* Adjust the size to your preference */
+    width: 16px; /* Adjust the size to your preference */
+    height: 16px; /* Adjust the size to your preference */
     border: 1px solid #333; /* Border color */
     border-radius: 50%; /* Make it rounded */
     position: relative;
@@ -30,8 +30,8 @@ border-radius: 50pxx;
   
   /* Style the checkbox when it's checked */
   .rounded-checkbox:checked {
-    background-color: #007bff; /* Change the background color when checked */
-    border-color: #007bff; /* Change the border color when checked */
+    background-color: green; /* Change the background color when checked */
+    border-color: green; /* Change the border color when checked */
   }
   
   /* Style the checkmark inside the checkbox */
@@ -41,7 +41,7 @@ border-radius: 50pxx;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 14px; /* Adjust the size to your preference */
+    font-size: 12px; /* Adjust the size to your preference */
     color: #fff; /* Checkmark color when checked */
   }
   
