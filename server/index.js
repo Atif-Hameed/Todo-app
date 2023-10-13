@@ -18,4 +18,9 @@ app.get('/listTodo', async (req, resp) => {
     resp.send(data)
 })
 
+app.delete('/delete/:id', async(req, resp) => {
+    const data = await Todo.deleteOne({_id:req.params.id})
+    resp.send(data)
+})
+
 app.listen(4120)
