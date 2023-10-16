@@ -23,4 +23,19 @@ app.delete('/delete/:id', async(req, resp) => {
     resp.send(data)
 })
 
+app.get('/getWork/:id', async (req, resp) => {
+    const data = await Todo.findOne({_id:req.params.id})
+    resp.send(data)
+})
+
+app.put('/update/:id', async(req, resp) => {
+    const data = await Todo.updateOne(
+        {_id:req.params.id},
+        {
+            $set: req.body
+        }
+    )
+    resp.send(data)
+})
+
 app.listen(4120)
