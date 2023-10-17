@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { AiFillEyeInvisible } from 'react-icons/ai';
 import { AiFillEye } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const SignUp = () => {
 
@@ -11,6 +11,7 @@ export const SignUp = () => {
     const [password, setPassword] = useState('')
     const [visible, setVisible] = useState(false)
     const [error, setError] = useState(false)
+    const navigate = useNavigate()
 
 
     const signUp = async () => {
@@ -31,7 +32,13 @@ export const SignUp = () => {
                 }
             })
             const result = await data.json()
-            console.log(result)
+            if(result){
+                localStorage.setItem('User', JSON.stringify(result))
+                navigate('/home')
+            }
+            else{
+                alert('Something is Wrong....')
+            }
         }
     }
 

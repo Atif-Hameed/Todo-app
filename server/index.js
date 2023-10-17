@@ -15,14 +15,19 @@ app.post('/signUp', async(req, resp)=>{
     resp.send(result)
 })
 
-app.get('/login', async(req, resp)=>{
+app.post('/login', async(req, resp)=>{
     const{email, password} = req.body
     if(email && password){
         const data = await User.findOne({email, password})
-        resp.send(data)
-    }
-    else{
-        resp.send("Email or Password is Wrong")
+        if(data){
+            resp.send(data)
+        }
+        else{
+            resp.send({Result:"Email or Password is Wrong111"})
+        }
+        
+    }else{
+        resp.send({Result:"Email or Password is Wrong222"})
     }
 })
 
