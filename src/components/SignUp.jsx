@@ -5,8 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export const SignUp = () => {
 
-    const [fName, setFname] = useState('')
-    const [lName, setLname] = useState('')
+    const [firstName, setFname] = useState('')
+    const [lastName, setLname] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [visible, setVisible] = useState(false)
@@ -14,33 +14,64 @@ export const SignUp = () => {
     const navigate = useNavigate()
 
 
+    // const signUp = async () => {
+
+    //     const err = !firstName || !lastName || !email || !password
+    //     if (err) {
+    //         setError(true)
+    //         return false
+    //     }
+    //     else {
+    //         const data = await fetch('http://localhost:4120/signUp', {
+    //             method: 'Post',
+    //             body: JSON.stringify({ firstName, lastName, email, password }),
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             }
+    //         })
+    //         const result = await data.json()
+    //         if(result){
+    //             localStorage.setItem('User', JSON.stringify(result))
+    //             navigate('/home')
+    //         }
+    //         else{
+    //             alert('Something is Wrong....')
+    //         }
+
+    //     }
+    // }
+
     const signUp = async () => {
+        const err = !firstName || !lastName || !email || !password;
 
-        const err = !fName || !lName || !email || !password
         if (err) {
-            setError(true)
-            return false
-        }
-        else {
-            console.warn(!fName)
-
+            setError(true);
+            return false;
+        } else {
             const data = await fetch('http://localhost:4120/signUp', {
-                method: 'Post',
-                body: JSON.stringify({ fName, lName, email, password }),
+                method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ firstName, lastName, email, password }),
+            });
+
+            if (data.status === 200) {
+                const result = await data.json();
+                localStorage.setItem('User', JSON.stringify(result));
+                navigate('/home');
+            } else {
+                // const errorData = await data.json();
+                if (data.status === 409) {
+                    alert("Email Already Exist...")
+                    setError(true);
+                } else {
+                    alert('Something is Wrong....');
                 }
-            })
-            const result = await data.json()
-            if(result){
-                localStorage.setItem('User', JSON.stringify(result))
-                navigate('/home')
-            }
-            else{
-                alert('Something is Wrong....')
             }
         }
-    }
+    };
+
 
     const handleVisible = () => {
         setVisible((prev) => !prev)
@@ -54,12 +85,12 @@ export const SignUp = () => {
                 <div className='w-[45%] h-[85%] rounded-xl bg-white px-6 flex flex-col items-center justify-between py-6' >
                     <div className='w-[80%] flex flex-col items-center gap-6'>
                         <div className='flex flex-col gap-0 w-full'>
-                            <input value={fName} onChange={(e) => setFname(e.target.value)} type="text" className='border-2 border-blue-500 rounded-lg outline-none text-xl px-2 h-12 w-full' placeholder='Enter First Name' name="" id="" />
-                            {error && !fName && <p className='text-sm text-red text-red-600'>Field is Empty</p>}
+                            <input value={firstName} onChange={(e) => setFname(e.target.value)} type="text" className='border-2 border-blue-500 rounded-lg outline-none text-xl px-2 h-12 w-full' placeholder='Enter First Name' name="" id="" />
+                            {error && !firstName && <p className='text-sm text-red text-red-600'>Field is Empty</p>}
                         </div>
                         <div className='flex flex-col gap-0 w-full'>
-                            <input value={lName} onChange={(e) => setLname(e.target.value)} type="text" className='border-2 border-blue-500 rounded-lg outline-none text-xl px-2 h-12 w-full' placeholder='Enter Last Name' name="" id="" />
-                            {error && !lName && <p className='text-sm text-red text-red-600'>Field is Empty</p>}
+                            <input value={lastName} onChange={(e) => setLname(e.target.value)} type="text" className='border-2 border-blue-500 rounded-lg outline-none text-xl px-2 h-12 w-full' placeholder='Enter Last Name' name="" id="" />
+                            {error && !lastName && <p className='text-sm text-red text-red-600'>Field is Empty</p>}
                         </div>
                         <div className='flex flex-col gap-0 w-full'>
                             <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" className='border-2 border-blue-500 rounded-lg outline-none text-xl px-2 h-12 w-full' placeholder='Enter Your Email' name="" id="" />

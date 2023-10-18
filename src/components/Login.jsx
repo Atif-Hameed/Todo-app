@@ -24,7 +24,7 @@ const Login = () => {
         }
     })
     const result = await findUser.json()
-    if(result.fName){
+    if(result.firstName){
         localStorage.setItem('User', JSON.stringify(result))
         navigate('/home')
     }
