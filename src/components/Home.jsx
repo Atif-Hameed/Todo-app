@@ -79,9 +79,7 @@ const Home = () => {
         catch (error) {
             console.log(error)
         }
-
     }
-
 
     const updateWork = async () => {
         const data = await fetch(`http://localhost:4120/update/${currentId}`, {
@@ -94,7 +92,6 @@ const Home = () => {
         const result = await data.json()
         listWork()
     }
-
 
     const toggleEditIconVisibility = (index) => {
         const newEditIconsVisible = [...editIconsVisible];
@@ -110,7 +107,6 @@ const Home = () => {
     useEffect(() => {
         listWork()
     }, [])
-
 
 
     return (
