@@ -14,33 +14,6 @@ export const SignUp = () => {
     const navigate = useNavigate()
 
 
-    // const signUp = async () => {
-
-    //     const err = !firstName || !lastName || !email || !password
-    //     if (err) {
-    //         setError(true)
-    //         return false
-    //     }
-    //     else {
-    //         const data = await fetch('http://localhost:4120/signUp', {
-    //             method: 'Post',
-    //             body: JSON.stringify({ firstName, lastName, email, password }),
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             }
-    //         })
-    //         const result = await data.json()
-    //         if(result){
-    //             localStorage.setItem('User', JSON.stringify(result))
-    //             navigate('/home')
-    //         }
-    //         else{
-    //             alert('Something is Wrong....')
-    //         }
-
-    //     }
-    // }
-
     const signUp = async () => {
         const err = !firstName || !lastName || !email || !password;
 
@@ -58,10 +31,11 @@ export const SignUp = () => {
 
             if (data.status === 200) {
                 const result = await data.json();
-                localStorage.setItem('User', JSON.stringify(result));
+                localStorage.setItem('User', JSON.stringify(result.finalResult));
+                localStorage.setItem('Auth', JSON.stringify(result.auth))
                 navigate('/home');
-            } else {
-                // const errorData = await data.json();
+            }
+            else {
                 if (data.status === 409) {
                     alert("Email Already Exist...")
                     setError(true);

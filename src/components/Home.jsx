@@ -15,6 +15,7 @@ const Home = () => {
     const navigate = useNavigate()
 
     let name = localStorage.getItem('User')
+    let token = localStorage.getItem('Auth')
     name = JSON.parse(name)
     const userId = name._id
 
@@ -30,7 +31,8 @@ const Home = () => {
                 method: 'post',
                 body: JSON.stringify({ userId, todo }),
                 headers: {
-                    'content-Type': 'application/json'
+                    'content-Type': 'application/json',
+                    authorization: `bearer ${JSON.parse(token)}`
                 }
             })
             const result = await data.json()
@@ -38,18 +40,19 @@ const Home = () => {
             listWork()
             setTodo('')
 
-            setTimeout(() => {
-                if (todoRef.current) {
-                    todoRef.current.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 0)
-
+            if (todoRef.current) {
+                todoRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
         }
     }
 
     const listWork = async () => {
         try {
-            const data = await fetch(`http://localhost:4120/listTodo/${userId}`)
+            const data = await fetch(`http://localhost:4120/listTodo/${userId}`,{
+                headers:{
+                    authorization: `bearer ${JSON.parse(token)}`
+                }
+            })
             const result = await data.json()
             setListTodo(result)
             console.log(listTodo)
@@ -63,7 +66,8 @@ const Home = () => {
         const data = await fetch(`http://localhost:4120/delete/${id}`, {
             method: 'delete',
             headers: {
-                'content-Type': 'application/json'
+                'content-Type': 'application/json',
+                authorization: `bearer ${JSON.parse(token)}`
             }
         })
         listWork();
@@ -86,7 +90,8 @@ const Home = () => {
             method: 'Put',
             body: JSON.stringify({ todo: getData }),
             headers: {
-                'content-Type': 'application/json'
+                'content-Type': 'application/json',
+                authorization: `bearer ${JSON.parse(token)}`
             }
         })
         const result = await data.json()
@@ -134,7 +139,7 @@ const Home = () => {
                             <li className='px-2 w-[71%] text-lg text-center'>Todo</li>
                             <li className='px-2 w-[12%] text-lg text-center'>Done</li>
                         </ul>
-                        { listTodo.length > 0 ?
+                        {listTodo.length > 0 ?
                             listTodo.map((item, index) => (
 
                                 <ul key={index} ref={index === listTodo.length - 1 ? todoRef : null} className='flex divide-x-2 divide-blue-700 border-t-0 border-2 border-blue-700 w-full'>
